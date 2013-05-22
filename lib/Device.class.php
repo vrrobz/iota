@@ -27,12 +27,24 @@ authentication	text NOT NULL
 			//primarily concerned with valid JSON at this point, so I'm just validating for that
 			//Future - validate to make sure the required stuff is there.
 			if(is_null(json_decode($this->dataArray["authentication"]))) {
-				$this->setError("interface", "Invalid JSON");
+				$this->setError("authentication", "Invalid JSON");
 				return false;
 			}
 			
 			
 			return true;
+		}
+		
+		//TODO: This should be handled in a manager.
+		function getAllDevices() {
+			$sql = "Select id from Devices";
+			$this->db->executeQuery($sql);
+			$retArray = array();
+			$res = $this->db->getResultArray();
+			foreach($res as $record) {
+				array_push($retArray, $record["id"]);
+			}
+			return $retArray;
 		}
 	}
 ?>

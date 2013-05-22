@@ -55,7 +55,7 @@
 
 			</select><br />
 			<strong>Authentication (JSON):</strong><br />
-			<textarea name="interface" rows="5" cols="25"><?php echo($valArray["interface"]); ?></textarea><br />
+			<textarea name="authentication" rows="5" cols="25"><?php echo($valArray["authentication"]); ?></textarea><br />
 			<input type="submit" value="Save" />
 		</form>
 	</body>

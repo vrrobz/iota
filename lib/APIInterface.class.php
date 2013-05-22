@@ -88,14 +88,15 @@ Ideally, this should be instantiated as a singleton. Again, being lazy for the s
 		function render() {
 			//Handle the logic of loading the controller and calling the action with the request parameters.
 			//echo("I would be calling the ".$this->controller." controller and the ".$this->action." action with ".count($this->idArray)." IDs");
-			if(!file_exists(APP_ROOT.'/controllers/'.$this->controller.'.class.php')) {
+			if(!file_exists(APP_ROOT.'/controllers/'.$this->controller.'Controller.class.php')) {
 				header("HTTP/1.0 500 Server Error");
 				echo("Bad controller");
 				return false;
 			}
 			//echo("I would be calling the ".$this->controller." controller and the ".$this->action." action with ".count($this->idArray)." IDs");
-			require_once(APP_ROOT.'/controllers/'.$this->controller.'.class.php');
-			$controller = new $this->controller;
+			require_once(APP_ROOT.'/controllers/'.$this->controller.'Controller.class.php');
+			$cname = $this->controller."Controller";
+			$controller = new $cname;
 			$controller->{$this->action}($this->request);
 			
 		}
