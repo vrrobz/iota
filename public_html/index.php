@@ -1,5 +1,5 @@
 <?php
-	require_once('../config/config.php');
+	require_once('config.php');
 	require_once('DBAccess.class.php');
 	//This will likely be the thing that handles the routing
 	
