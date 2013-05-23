@@ -20,6 +20,7 @@
 			$myArray["devices"] = $retArray;
 			//TODO: abstract this out to only return the array, let the APIInterface manage the HTTP stuff
 			header("HTTP/1.0 200 OK");
+			header("Content-type: application/json");
 			echo(stripslashes(json_encode($myArray)));
 		}
 		
@@ -42,6 +43,7 @@
 			$newJSON = str_replace(":id", $params["id"], $newJSON);
 			
 			header("HTTP/1.0 200 OK");
+			header("Content-type: application/json");
 			echo($newJSON);
 		}
 	}
