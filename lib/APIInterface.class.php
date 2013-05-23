@@ -28,8 +28,14 @@ Ideally, this should be instantiated as a singleton. Again, being lazy for the s
 		function routeByURI($uri) {
 			//Let's first generalize the given uri, extracting IDs, etc.
 			str_replace(API_ROOT, '', $uri);
+			$querystring = '';
 			
 			$pathArray = explode('/', $uri);
+			//Remove querystring
+			if(strstr($pathArray[count($pathArray) - 1], '?') !== false) {
+				$querystring = array_pop($pathArray);
+			}		
+			
 			//Remove trailing slash
 			if($pathArray[count($pathArray) - 1] == '') {
 				array_pop($pathArray);
