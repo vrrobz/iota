@@ -1,5 +1,6 @@
 <?php
 
+require_once '../../lib/Growl/Autoload.php';
 /**
  * /command
  *
@@ -45,6 +46,7 @@ class LightSwitch {
     const COMMAND_TOGGLE = "toggle";
 
     protected $_status = self::STATUS_OFF;
+    protected $_growl;
 
     /**
      * Initializes a new light switch virtual device.
@@ -53,6 +55,27 @@ class LightSwitch {
         if($loadFromCache) {
             $this->_loadFromCache();
         }
+
+        // Initialize Growl Notifications
+        $name = 'Light Switch';
+        $this->_growl = Net_Growl::singleton(
+            $name,
+            array(
+                'GROWL_NOTIFY_STATUS' => array(
+                    'display' => 'Status',
+                ),
+                'GROWL_NOTIFY_PHPERROR' => array(
+                    'display' => 'Error-Log'
+                )
+            ),
+            '',
+            array(
+                'protocol' => 'gntp',
+                'timeout'  => 15,
+            )
+        );
+
+        $this->_growl->register();
     }
 
     /**
@@ -88,15 +111,21 @@ class LightSwitch {
                 return false;
 
             case 'toggle':
-                $this->_status = $this->_status == self::STATUS_ON ? self::STATUS_OFF : self::STATUS_ON;
-                return $this->_status;
+                if($this->_status == self::STATUS_ON) {
+                    return $this->command(self::STATUS_OFF);
+                }
+                else {
+                    return $this->command(self::STATUS_OFF);
+                }
 
             case self::STATUS_ON:
                 $this->_status = self::STATUS_ON;
+                $this->_growl->publish('GROWL_NOTIFY_STATUS', '', 'Turning On!');
                 break;
 
             case self::STATUS_OFF:
                 $this->_status = self::STATUS_OFF;
+                $this->_growl->publish('GROWL_NOTIFY_STATUS', '', 'Turning Off!');
                 break;
         }
 
