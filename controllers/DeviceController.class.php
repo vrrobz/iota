@@ -37,6 +37,8 @@
 			
 			$newJSON = json_encode($actArray);
 			
+			$newJSON = str_replace(":id", $params["id"], $newJSON);
+			
 			header("HTTP/1.0 200 OK");
 			echo($newJSON);
 		}
