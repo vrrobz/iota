@@ -75,6 +75,14 @@ if(strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
 				$apiAccessor->startAllVehicles();
 				$ret = "ALL ON";
 			}
+			
+			$c = curl_init();
+			curl_setopt($c, CURLOPT_HTTPGET, true);
+			curl_setopt($c, CURLOPT_URL, "http://209.114.35.97:22902/test_devices/alerter/command/on");
+			curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+			$res = curl_exec($c);
+			curl_close($c);
+			
 			header("HTTP/1.0 200 OK");
 			header("Content-type: application/json");
 			echo('{"state":"' .$ret. '"}');
