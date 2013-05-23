@@ -270,7 +270,7 @@ class Accessor_GM_Remote {
      */
     public function unlockAllVehicles() {
         foreach($this->_vehicles as $vehicle) {
-            $this->unlock($vehicle->vin);
+            $this->unlockVehicle($vehicle->vin);
             sleep(1);
         }
 
