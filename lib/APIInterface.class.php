@@ -97,8 +97,8 @@ Ideally, this should be instantiated as a singleton. Again, being lazy for the s
 			require_once(APP_ROOT.'/controllers/'.$this->controller.'Controller.class.php');
 			$cname = $this->controller."Controller";
 			$controller = new $cname;
-			$controller->{$this->action}($this->request);
-			
+			$res = $controller->{$this->action}($this->request);
+			echo($res);
 		}
 	}
 ?>

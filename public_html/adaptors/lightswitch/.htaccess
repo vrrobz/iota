@@ -1,3 +1,7 @@
-RewriteEngine On
-
-RewriteRule    ^([A-Za-z0-9\-_]*)(/([A-Za-z0-9\-_]*)3(/([A-Za-z0-9\-_]*)/?)?$    $1.php?id=$2    [L,QSA]
+#RewriteEngine On
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_URI} !^/iota/adaptors/lightswitch/index.php
+#RewriteCond %{REQUEST_URI} (/|\.php|\.html|\.htm|\.feed|\.pdf|\.raw|/[^.]*)$  [NC]
+#RewriteRule (.*) index.php
+#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
