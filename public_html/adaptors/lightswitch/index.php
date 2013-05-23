@@ -72,8 +72,18 @@
 				echo("Service returned false");
 			}
 		}
+	} else if(strtolower($_SERVER['REQUEST_METHOD']) == 'get') {
+		$c = curl_init();
+		$url = "/status/get";
+		curl_setopt($c, CURLOPT_HTTPGET, true);
+		curl_setopt($c, CURLOPT_URL, $lightswitchEndpoint.$url);
+		curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+		$res = curl_exec($c);
+		header("HTTP/1.0 200 OK");
+		echo($res);
 	} else {
 		header("HTTP/1.0 501 Not Implemented");
+		echo("Not implemented");
 		exit();
 	}
 ?>

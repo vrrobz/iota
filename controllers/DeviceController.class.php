@@ -18,7 +18,7 @@
 			}
 			//TODO: abstract this out to only return the array, let the APIInterface manage the HTTP stuff
 			header("HTTP/1.0 200 OK");
-			echo(json_encode($retArray));
+			echo(stripslashes(json_encode($retArray)));
 		}
 		
 		function getDeviceActions($params) {
@@ -35,7 +35,9 @@
 				$actArray["actions"][$action]["uri"] = "http://".$_SERVER["HTTP_HOST"].$dt->getData("endpoint").$actArray["actions"][$action]["uri"];
 			}
 			
-			$newJSON = json_encode($actArray);
+			$newJSON = stripslashes(json_encode($actArray));
+			
+			$newJSON = str_replace(":id", $params["id"], $newJSON);
 			
 			header("HTTP/1.0 200 OK");
 			echo($newJSON);
