@@ -12,6 +12,7 @@ else
     //TODO: Standardize parameters and formatting of commands
     $curl = curl_init();
     curl_setopt_array($curl, array(
+        CURLOPT_URL => 'http://vrlabs-qa.verticalresponse.com/iota/adaptors/lightswitch/index.php/2/',
         CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_POST => 1,
         CURLOPT_POSTFIELDS => array(
