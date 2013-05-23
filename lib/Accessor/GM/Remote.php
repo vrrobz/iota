@@ -10,7 +10,7 @@ class Accessor_GM_Remote {
     const URL_VEHICLE_LIST = 'https://developer.gm.com/api/v1/account/vehicles?offset=0&size=5';
     const URL_VEHICLE_COMMANDS = 'https://developer.gm.com/api/v1/account/vehicles/{VIN}/commands/';
 
-    protected static $_debug = true;
+    protected static $_debug = false;
 
     protected $_apiKey;
     protected $_apiSecret;

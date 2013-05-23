@@ -57,7 +57,7 @@ class LightSwitch {
         }
 
         // Initialize Growl Notifications
-        $name = 'Vehicle Engine';
+        $name = 'GM Vehicle';
         $this->_growl = Net_Growl::singleton(
             $name,
             array(
