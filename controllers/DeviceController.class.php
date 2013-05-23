@@ -35,7 +35,7 @@
 				$actArray["actions"][$action]["uri"] = "http://".$_SERVER["HTTP_HOST"].$dt->getData("endpoint").$actArray["actions"][$action]["uri"];
 			}
 			
-			$newJSON = json_encode($actArray);
+			$newJSON = stripslashes(json_encode($actArray));
 			
 			$newJSON = str_replace(":id", $params["id"], $newJSON);
 			
