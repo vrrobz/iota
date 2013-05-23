@@ -11,9 +11,40 @@
 $result = null;
 $apiKey = '8c1949ea7b1931c04a2f33862';
 $apiSecret = '5afe1be5c91293f9';
-$tokenUrl = 'https://developer.gm.com/api/v1/oauth/access_token';
-$vehicleListUrl = 'https://developer.gm.com/api/v1/account/vehicles?offset=0&size=5';
-$vehicleStartUrl = 'https://developer.gm.com/api/v1/account/vehicles/{VIN}/commands/start';
+
+
+if(isset($_SERVER["PATH_INFO"])) {
+	$pageURI = $_SERVER["PATH_INFO"];
+} else {
+	$pageURI = str_replace('index.php', '', $_SERVER["REQUEST_URI"]);
+}
+
+
+$pathArray = explode('/', $pageURI);
+//Remove trailing slash
+if($pathArray[count($pathArray) - 1] == '') {
+	array_pop($pathArray);
+}
+
+$idCount = 2;
+
+$id = '';
+
+//FIXME: NOT DRY!!!
+//Extract the numeric IDs, then generalise them for a search
+//FIXME: This means we can only accept numeric IDs. I don't like this. HACK HACK HACK
+for($n = 0; $n < count($pathArray); $n++) {
+	if(is_numeric($pathArray[$n])) {
+		$id = $pathArray[$n];
+	}
+}
+
+
+
+
+
+
+
 
 // Initialize GM Remote accessor.
 $apiAccessor = new Accessor_GM_Remote($apiKey, $apiSecret);
