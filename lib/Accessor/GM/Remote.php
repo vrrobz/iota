@@ -125,7 +125,36 @@ class Accessor_GM_Remote {
             )
         );
 
-        var_dump($response);
+        return true;
+    }
+
+    /**
+     * Sends the stop command to the specified vehicle.
+     *
+     * @param string $vin the VIN associated with the target vehicle
+     *
+     * @return bool whether or not the request was successful
+     */
+    public function stopVehicle($vin = null) {
+        if(is_null($vin)) {
+            $vin = $this->_vehicles[5]->vin;
+        }
+
+        $url = str_replace('{VIN}', $vin, self::URL_VEHICLE_COMMANDS . '/stop');
+        $response = $this->_requestJson(
+            $url,
+            array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => '',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer ' . $this->_accessToken,
+                    'Accept: application/json',
+                    'Accept-Language: en-us',
+                    'Accept-Encoding: gzip, deflate'
+                )
+            )
+        );
 
         return true;
     }
@@ -138,6 +167,110 @@ class Accessor_GM_Remote {
     public function startAllVehicles() {
         foreach($this->_vehicles as $vehicle) {
             $this->startVehicle($vehicle->vin);
+            sleep(1);
+        }
+
+        return true;
+    }
+
+    /**
+     * Sends the stop command to all available vehicles.
+     *
+     * @return bool whether or not all requests were successful
+     */
+    public function stopAllVehicles() {
+        foreach($this->_vehicles as $vehicle) {
+            $this->stopVehicle($vehicle->vin);
+            sleep(1);
+        }
+
+        return true;
+    }
+
+    /**
+     * Requests that the specified vehicle be locked.
+     *
+     * @param string $vin the VIN associated with the target vehicle
+     *
+     * @return bool whether or not the request was successful
+     */
+    public function lockVehicle($vin = null) {
+        if(is_null($vin)) {
+            $vin = $this->_vehicles[5]->vin;
+        }
+
+        $url = str_replace('{VIN}', $vin, self::URL_VEHICLE_COMMANDS . '/lockDoor');
+        $response = $this->_requestJson(
+            $url,
+            array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => '',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer ' . $this->_accessToken,
+                    'Accept: application/json',
+                    'Accept-Language: en-us',
+                    'Accept-Encoding: gzip, deflate'
+                )
+            )
+        );
+
+        return true;
+    }
+
+    /**
+     * Requests that the specified vehicle be unlocked.
+     *
+     * @param string $vin the VIN associated with the target vehicle
+     *
+     * @return bool whether or not the request was successful
+     */
+    public function unlockVehicle($vin = null) {
+        if(is_null($vin)) {
+            $vin = $this->_vehicles[5]->vin;
+        }
+
+        $url = str_replace('{VIN}', $vin, self::URL_VEHICLE_COMMANDS . '/unlockDoor');
+        $response = $this->_requestJson(
+            $url,
+            array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => '',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer ' . $this->_accessToken,
+                    'Accept: application/json',
+                    'Accept-Language: en-us',
+                    'Accept-Encoding: gzip, deflate'
+                )
+            )
+        );
+
+        return true;
+    }
+
+    /**
+     * Locks all available vehicles.
+     *
+     * @return bool whether or not all requests were successful
+     */
+    public function lockAllVehicles() {
+        foreach($this->_vehicles as $vehicle) {
+            $this->lockVehicle($vehicle->vin);
+            sleep(1);
+        }
+
+        return true;
+    }
+
+    /**
+     * Unlocks all available vehicles.
+     *
+     * @return bool whether or not all requests were successful
+     */
+    public function unlockAllVehicles() {
+        foreach($this->_vehicles as $vehicle) {
+            $this->unlockVehicle($vehicle->vin);
             sleep(1);
         }
 
