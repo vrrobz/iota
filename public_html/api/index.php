@@ -17,6 +17,7 @@
 	
 	$api = new APIInterface();
 	$api->init($_REQUEST);
+	$pageURI = str_replace(API_ROOT, '', $pageURI);
 	if(($resource = $api->routeByURI($pageURI)) === false) {
 		header("HTTP/1.0 404 Not Found");
 		echo("Unable to locate the resource for ".$pageURI);
