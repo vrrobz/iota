@@ -29,7 +29,8 @@
 		}
 	}
 	
-	$lightswitchEndpoint = "http://iota.uberwork.local:8080/test_devices/lightswitch";
+	$lightswitchEndpoint = "http://209.114.35.97:22902/test_devices/lightswitch";
+	//$lightswitchEndpoint = "http://iota.uberwork.local:8080/test_devices/lightswitch";
 	
 	//TODO: Create an API to allow adaptors to register themselves so everyone can use the same JSON and be happy.
 	
@@ -60,11 +61,15 @@
 			$res = curl_exec($c);
 			curl_close($c);
 			if($res == "true") {
+				header("HTTP/1.0 200 OK");
 				echo $ret;
 			} else if($res === false) {
-				echo("Res returned false");
+				header("HTTP/1.0 500 Server error");
+				echo("Could not execute code on endpoint");
+				exit();
 			} else {
-				echo($ret.': '.$res);
+				header("HTTP/1.0 500 Server error");
+				echo("Service returned false");
 			}
 		}
 	} else {
