@@ -51,7 +51,7 @@
 				$url = "/command/off";
 				$ret = "OFF";
 			} else {
-				$ret = "error";
+				$ret = "ERROR";
 			}
 				
 			$c = curl_init();
@@ -62,7 +62,8 @@
 			curl_close($c);
 			if($res == "true") {
 				header("HTTP/1.0 200 OK");
-				echo $ret;
+				header("Content-type: application/json");
+				echo '{"status":"'.$ret.'"}';
 			} else if($res === false) {
 				header("HTTP/1.0 500 Server error");
 				echo("Could not execute code on endpoint");
@@ -80,7 +81,8 @@
 		curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 		$res = curl_exec($c);
 		header("HTTP/1.0 200 OK");
-		echo($res);
+		header("Content-type: application/json");
+		echo '{"status":'.strtoupper($res).'}';
 	} else {
 		header("HTTP/1.0 501 Not Implemented");
 		echo("Not implemented");
