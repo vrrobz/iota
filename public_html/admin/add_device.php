@@ -44,7 +44,7 @@
 				<option value=""> -- SELECT ONE --</option>
 <?php
 	foreach($deviceTypeArray as $did) {
-		$device = new Device();
+		$device = new DeviceType();
 		$device->init($did);
 ?>
 				<option value="<?php echo($did); ?>"><?php echo($device->getData("name")); ?></option>
