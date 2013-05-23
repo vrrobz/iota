@@ -10,6 +10,8 @@ class Accessor_GM_Remote {
     const URL_VEHICLE_LIST = 'https://developer.gm.com/api/v1/account/vehicles?offset=0&size=5';
     const URL_VEHICLE_COMMANDS = 'https://developer.gm.com/api/v1/account/vehicles/{VIN}/commands/';
 
+    protected static $_debug = true;
+
     protected $_apiKey;
     protected $_apiSecret;
     protected $_accessToken;
@@ -26,6 +28,17 @@ class Accessor_GM_Remote {
         $this->_apiSecret = $apiSecret;
         $this->_accessToken = $this->_requestAccessToken();
         $this->_vehicles = $this->_requestVehicleList();
+    }
+
+    /**
+     * Outputs the specified text in preformatted HTML tags.
+     *
+     * @param string $text the text to be displayed
+     */
+    protected static function _pre($text = '') {
+        echo '<pre>';
+        echo $text;
+        echo '</pre>';
     }
 
     /**
@@ -48,6 +61,10 @@ class Accessor_GM_Remote {
         $result = curl_exec($curl);
 
         curl_close($curl);
+
+        if(self::$_debug) {
+            self::_pre($result);
+        }
 
         return json_decode($result);
     }
