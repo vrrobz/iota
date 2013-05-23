@@ -6,21 +6,9 @@
 		"action":"getAllDevices"
 	},
 	{
-		"uri":"/device/:id",
-		"method":"GET",
-		"controller":"Device",
-		"action":"getDevice"
-	},
-	{
 		"uri":"/device/:id/actions",
 		"method":"GET",
 		"controller":"Device",
 		"action":"getDeviceActions"
-	},
-	{
-		"uri":"/device/:id",
-		"method":"POST",
-		"controller":"Device",
-		"action":"doDeviceAction"
 	}
 ]}

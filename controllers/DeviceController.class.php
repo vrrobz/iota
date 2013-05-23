@@ -21,16 +21,24 @@
 			echo(json_encode($retArray));
 		}
 		
-		function getDevice($params) {
-			echo("I should be getting you the device specifics here for device ID ".$params["id"]);
-		}
-		
 		function getDeviceActions($params) {
-			echo("I should be getting you the actions available for this device here for device ID ".$params["id"]);
-		}
-		
-		function doDeviceAction($params) {
-			echo("I should be performing some post action here");
+			//echo("I should be getting you the actions available for this device here for device ID ".$params["id"]);
+			$d = new Device();
+			$d->init($params["id"]);
+			$dt = new DeviceType();
+			$dt->init($d->getData("device_type"));
+			//TODO: See above
+			
+			//Want to replace URIs with full URIs. This would usually be done by the adaptor, but... 
+			$actArray = json_decode($dt->getData("interface"), true);
+			foreach(array_keys($actArray["actions"]) as $action) {
+				$actArray["actions"][$action]["uri"] = "http://".$_SERVER["HTTP_HOST"].$dt->getData("endpoint").$actArray["actions"][$action]["uri"];
+			}
+			
+			$newJSON = json_encode($actArray);
+			
+			header("HTTP/1.0 200 OK");
+			echo($newJSON);
 		}
 	}
 ?>

@@ -1,0 +1,64 @@
+{"actions": {
+        "toggle_light": {
+            "description": "Turns light either on to full intensity or off completely.",
+            "uri": "/:id",
+            "method": "POST",
+            "params": {
+                "toggle_state": {
+                    "description": "Set to ON if you want the light on, OFF if you want the light off",
+                    "type": "string",
+                    "required": "true"
+                }
+            },
+            "response": {
+                "status": {
+                    "description": "Returns ON if light is toggled on, OFF if light was toggled off",
+                    "type": "string",
+                    "required": "true"
+                }
+            }
+        },
+        "dim_light": {
+            "description": "Changes the intensity of dimmable light",
+            "uri": "/:id",
+            "method": "POST",
+            "params": {
+                "intensity": {
+                    "description": "A value from 0-255 representing the intensity to which the light should be dimmed, with 255 being full intensity and 0 being off",
+                    "type": "int",
+                    "required": "true"
+                }
+            },
+            "response": {
+                "intensity": {
+                    "description": "Returns the current intensity of the light",
+                    "type": "int",
+                    "required": "true"
+                }
+            }
+        },
+        "get_properties": {
+            "description": "Gets the complete status of this light",
+            "uri": "/:id",
+            "method": "GET",
+            "params": {},
+            "response": {
+                "light_status": {
+                    "description": "Whether the light is on or off",
+                    "type": "string",
+                    "required": "true"
+                },
+                "intensity": {
+                    "description": "Returns the intensity of a dimmable light",
+                    "type": "int",
+                    "required": "true"
+                },
+                "is_dimmable": {
+                    "description": "Returns true if this light can take incremental intensity values; otherwise false",
+                    "type": "boolean",
+                    "required": "true"
+                }
+            }
+        }
+    }
+}
