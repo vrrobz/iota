@@ -12,16 +12,17 @@ else
     //TODO: Standardize parameters and formatting of commands
     $curl = curl_init();
     curl_setopt_array($curl, array(
+        CURLOPT_URL => 'http://vrlabs-qa.verticalresponse.com/iota/adaptors/lightswitch/index.php/2/',
         CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_POST => 1,
         CURLOPT_POSTFIELDS => array(
             translateAction($data['action']) => $data['param']
         ))
     );
-    $result =  curl_exec($curl);
+    $data['message'] =  curl_exec($curl);
     curl_close($curl);
-
-    dumpResult($result);
+    //var_dump($data);
+    dumpResult($data);
 }
 
 function parseCommandData($string)
@@ -36,8 +37,8 @@ function parseCommandData($string)
     }
 
     // TODO: Work out best order for command data words
-    $result['device_name'] = $args[0];
-    $result['action'] = $args[1];
+    $result['device_name'] = $args[1];
+    $result['action'] = $args[0];
     $result['param'] = $args[2];
 
     return $result;
@@ -45,7 +46,7 @@ function parseCommandData($string)
 
 function translateAction($string)
 {
-    switch ($string)
+    switch (strtolower($string))
     {
         case "turn":
             return "toggle_state";
@@ -56,7 +57,7 @@ function translateAction($string)
 
 function dumpResult($data)
 {
-    if ($data['message'] == "error")
+    if ($data['device_name'] == "error")
     {
         $body = "Error: " . $data['message'];
     }
